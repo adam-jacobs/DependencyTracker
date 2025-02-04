@@ -1,0 +1,9 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="128px" height="128px" fill="black" rx="6px"/>
+    <rect x="0" y="112px" width="128px" height="8px" fill="#3ce6ad"/>
+    <rect x="0" y="112px" width="128px" height="16px" fill="#3ce6ad" rx="6px"/>
+    <text xml:space="preserve"
+          x="20px" y="56px"
+          font-family="Arial, Helvetica, sans-serif" font-size="36px" font-weight="bold"
+          fill="#3ce6ad">DT</text>
+</svg>
