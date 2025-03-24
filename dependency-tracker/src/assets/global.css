@@ -1,0 +1,16 @@
+:root {
+    --primary-color: #5c67f2;
+    --primary-hover: #4a54e1;
+
+    --foreground: #2C2C2C;
+
+    --icon-foreground: #2C2C2C;
+
+    --background: #f4f4f4;
+    --background-secondary: white;
+
+    --toolbar-background: #e0e0e0;
+
+    --border-color: #ddd;
+
+}
