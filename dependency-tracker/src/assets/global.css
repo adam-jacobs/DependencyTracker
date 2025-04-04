@@ -3,6 +3,7 @@
     --primary-hover: #4a54e1;
 
     --foreground: #2C2C2C;
+    --text-light: #424242;
 
     --icon-foreground: #2C2C2C;
 
@@ -12,5 +13,5 @@
     --toolbar-background: #e0e0e0;
 
     --border-color: #ddd;
-
+    
 }

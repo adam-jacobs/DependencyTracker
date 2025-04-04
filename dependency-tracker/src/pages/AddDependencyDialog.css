@@ -1,0 +1,28 @@
+.container {
+    width: 80vw;
+    height: 80vh;
+    background-color: var(--background-secondary);
+    border-radius: 10px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.title-container {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.close-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.title {
+    color: var(--foreground);
+    margin: 0;
+}
