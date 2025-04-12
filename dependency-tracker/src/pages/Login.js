@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import './Login.css';
+import '../App.css';
 
 const Login = () => {
 
@@ -8,7 +9,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => 
+  {
     e.preventDefault();
 
     try {
@@ -18,19 +20,21 @@ const Login = () => {
         body: JSON.stringify({email, password})
       });
 
-      if (!response.ok){
+      if (!response.ok)
+      {
         throw new Error(result.error);
       }
 
-      if (response.status == 200){
-        navigate('/dependencies');
+      if (response.status == 200)
+      {
+        const user = await response.json()
+        localStorage.setItem('userId', JSON.stringify(user.userId))
+        navigate('/dependencies')
       }
 
       const result = await response.json();
     }
-    catch (error) {
-      
-    }
+    catch (error) {}
   }
 
     return (
@@ -62,7 +66,7 @@ const Login = () => {
             </div>
 
             <div className="login-button-container">
-              <button type="submit" className="login-button">
+              <button className="btn" type="submit">
                 login
               </button>
             </div>

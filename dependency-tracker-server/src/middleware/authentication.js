@@ -12,7 +12,7 @@ const authenticateUser = async (req, res, next) => {
     
     if (correctPassword != null) {
       if (isMatch) {
-          res.status(200).send();
+          res.status(200).json({ userId: user.id});
     } else {
           res.status(401).send();
       }
