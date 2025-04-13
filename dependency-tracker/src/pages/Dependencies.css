@@ -1,4 +1,4 @@
-.dependencies-container {
+.page-wrapper {
     display: inline;
 }
 
@@ -9,6 +9,29 @@
     left: 0px;
     top: 0px;
     background: var(--toolbar-background);
+}
+
+.dependencies-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.selector {
+    align-items: center;
+    height: 20vh;
+    display: flex;
+}
+
+.grid div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.top-label {
+    transform: rotate(90deg);
 }
 
 .add-dependencies-container {
