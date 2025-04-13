@@ -44,14 +44,3 @@
 .form-container label {
     margin: 1rem;
 }
-
-.name-version input {
-    margin: 1rem;
-    border-radius: 5px;
-    border-width: 1px;
-    padding: 0.5rem;
-}
-
-.input-error {
-    background-color: red;
-}

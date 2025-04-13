@@ -89,7 +89,8 @@ const AddDependencyDialog = ({ onClose }) => {
               <div className="name-version">
                 <input
                   title={buildsMatchError ? null : s_buildMatchErrorTooltip}
-                  className={buildsMatchError ? "input-error" : ""}
+                  className="inpt"
+                  style={{margin: '1rem', backgroundColor: buildsMatchError ? 'red' : 'var(--background-secondary)'}}
                   placeholder="Project name"
                   required
                   value={name}
@@ -97,7 +98,8 @@ const AddDependencyDialog = ({ onClose }) => {
                 />
                 <input
                   title={buildsMatchError ? null : s_buildMatchErrorTooltip}
-                  className={buildsMatchError ? "input-error" : ""}
+                  className="inpt"
+                  style={{margin: '1rem', backgroundColor: buildsMatchError ? 'red' : 'var(--background-secondary)'}}
                   placeholder="Project version"
                   required
                   value={version}
@@ -114,7 +116,8 @@ const AddDependencyDialog = ({ onClose }) => {
               <div className="name-version">
                 <input
                   title={buildsMatchError ? null : s_buildMatchErrorTooltip}
-                  className={buildsMatchError ? "input-error" : ""}
+                  className="inpt"
+                  style={{margin: '1rem', backgroundColor: buildsMatchError ? 'red' : 'var(--background-secondary)'}}
                   placeholder="Project name"
                   required
                   value={dependantName}
@@ -122,7 +125,8 @@ const AddDependencyDialog = ({ onClose }) => {
                 />
                 <input
                   title={buildsMatchError ? null : s_buildMatchErrorTooltip}
-                  className={buildsMatchError ? "input-error" : ""}
+                  className="inpt"
+                  style={{margin: '1rem', backgroundColor: buildsMatchError ? 'red' : 'var(--background-secondary)'}}
                   placeholder="Project version"
                   required
                   value={dependantVersion}
