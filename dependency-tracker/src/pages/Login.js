@@ -22,6 +22,7 @@ const Login = () => {
 
       if (!response.ok)
       {
+        const result = await response.json();
         throw new Error(result.error);
       }
 
@@ -32,7 +33,6 @@ const Login = () => {
         navigate('/dependencies')
       }
 
-      const result = await response.json();
     }
     catch (error) {}
   }
