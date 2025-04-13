@@ -26,7 +26,7 @@ const Login = () => {
         throw new Error(result.error);
       }
 
-      if (response.status == 200)
+      if (response.status === 200)
       {
         const user = await response.json()
         localStorage.setItem('userId', JSON.stringify(user.userId))

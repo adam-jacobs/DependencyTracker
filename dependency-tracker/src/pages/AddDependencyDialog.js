@@ -21,8 +21,8 @@ const AddDependencyDialog = ({ onClose }) => {
 
   const updateBuildsMatchError = () => 
   {
-    if ((name != '' && name == dependantName) &&
-      (version != '' && version == dependantVersion)) 
+    if ((name !== '' && name === dependantName) &&
+      (version !== '' && version === dependantVersion)) 
       {
         setBuildsMatchError("The builds cannot match");
       }
@@ -53,7 +53,7 @@ const AddDependencyDialog = ({ onClose }) => {
         throw new Error(result.error);
       }
 
-      if (response.status == 200)
+      if (response.status === 200)
       {
         setName('');
         setVersion('');
