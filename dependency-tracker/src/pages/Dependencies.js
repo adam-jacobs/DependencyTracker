@@ -9,9 +9,9 @@ function Depencencies() {
 
   const projects = ["Project A", "Project B", "Project C"];
   const data = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
+    [0, 1, 2, 3],
+    [4, 5, 6, 7],
+    [8, 9, 10, 11],
   ];
 
   return (
@@ -36,33 +36,28 @@ function Depencencies() {
           </div>
           <div className="grid" style={{
             display: 'grid',
-            gridTemplateColumns: `80px repeat(${projects.length}, 80px)`,
-            gridAutoRows: '80px',
+            gridTemplateColumns: `auto repeat(${projects.length + 1}, auto)`,
+            gridTemplateRows: `auto repeat(${projects.length}, auto)`,
           }}>
 
             <div />
+            <div className="x-label">Selected Project</div>
             
             {projects.map((project, i) => (
-              <div style={{
-                borderRight: '1px solid black',
-                transform: 'rotate(180deg)',
-                writingMode: 'vertical-rl'
-              }}>
+              <div className="x-label" >
                 {project}
               </div>
             ))}
 
             {projects.map((rowLabel, rowIndex) => (
-              <React.Fragment>
+              <React.Fragment >
                 <div style={{
                   borderTop: '1px solid black'
                 }}>
                   {rowLabel}
                   </div>
                 {data[rowIndex].map((cell, colIndex) => (
-                  <div style={{
-                    border: '1px solid black',
-                  }}>
+                  <div style={{borderLeft: '1px solid black', borderTop: '1px solid black'}}>
                     {cell}
                   </div>
                 ))}
