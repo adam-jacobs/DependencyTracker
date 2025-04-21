@@ -23,7 +23,13 @@ export async function addBuild (name, version, userId)
     }
     else 
     {
-        const { data, error } = await database
+        return getBuildId(name, version, userId);
+    }
+}
+
+export async function getBuildId(name, version, userId){
+  
+  const { data, error } = await database
           .from("builds")
           .select("id")
           .eq("name", name)
@@ -33,7 +39,29 @@ export async function addBuild (name, version, userId)
         if (error) throw error;
 
         return data[0].id;
-    }
+}
+
+export async function getDependantBuildIds(buildId){
+  const { data, error } = await database
+    .from("dependencies")
+    .select("build_2")
+    .eq("build_1", buildId);
+
+    if (error) throw error;
+
+    return data.map(row => row.build_2);
+}
+
+export async function getBuilds(buildIds){
+
+  const { data, error } = await database
+  .from('builds')
+  .select('name, version')
+  .in('id', buildIds);
+
+  if (error) throw error;
+
+  return data;
 }
 
 export async function addDependency (buildId, dependentBuildId) 
