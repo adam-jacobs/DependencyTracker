@@ -5,13 +5,21 @@ import '../App.css';
 
 const AddDependencyDialog = ({ onClose }) => {
 
+  const [tabIndex, setTab] = useState(1);
+  
   const [name, setName] = useState('');
   const [version, setVersion] = useState('');
   const [dependantName, setDependantName] = useState('');
   const [dependantVersion, setDependantVersion] = useState('');
   const [buildsMatchError, setBuildsMatchError] = useState(null);
-
+  
   const s_buildMatchErrorTooltip = "The builds cannot be the same";
+
+  const tabs = [
+    { id: 1, label: 'Add Dependency', content: addDependencyConent()},
+    { id: 2, label: 'Scan Repo', content: scanRepoContent()}
+  ]
+
 
   useEffect(() => 
   {
@@ -19,7 +27,7 @@ const AddDependencyDialog = ({ onClose }) => {
 
   }, [name, version, dependantName, dependantVersion])
 
-  const updateBuildsMatchError = () => 
+  function updateBuildsMatchError() 
   {
     if ((name !== '' && name === dependantName) &&
       (version !== '' && version === dependantVersion)) 
@@ -32,7 +40,7 @@ const AddDependencyDialog = ({ onClose }) => {
     }
   }
 
-  const handleAdd = async (e) => 
+  async function handleAdd(e)
   {
     e.preventDefault()
 
@@ -62,25 +70,12 @@ const AddDependencyDialog = ({ onClose }) => {
       }
     }
     catch (error) {}
+  
   }
-
-    return (
-      <div className="container">
-        <div className="header-container">
-          <div className="title-container">
-            <h1 className="title">Add dependency</h1>
-          </div>
-          <div className="close-button-container">
-            <XButton
-              size={30}
-              rotation={45}
-              onClick={onClose}
-              tooltip="close"
-            />
-          </div>
-        </div>
-        <div className="content-container">
-          <form onSubmit={handleAdd}>
+  
+  function addDependencyConent() {
+    return(
+      <form onSubmit={handleAdd}>
             <div className="form-container">
               <div className="name-version-label">
                 <label>Name:</label>
@@ -140,7 +135,49 @@ const AddDependencyDialog = ({ onClose }) => {
                 </button>
               </div>
             </div>
-          </form>
+      </form>
+    );
+  };
+
+  function scanRepoContent() {
+    return (
+      <div>Scan Repo</div>
+    );
+  };
+
+    return (
+      <div className="container">
+        <div className="header-container">
+          <div className="title-container">
+            <h1 className="title">Add dependency</h1>
+          </div>
+          <div className="close-button-container">
+            <XButton
+              size={30}
+              rotation={45}
+              onClick={onClose}
+              tooltip="close"
+            />
+          </div>
+        </div>
+        <div name="tab-container" style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gridRowStart: '2'}}>
+          {tabs.map(tab => (
+            <div style={
+              {
+                cursor: 'pointer', 
+                margin: '1rem',
+                borderBottom: tab.id === tabIndex ? '3px solid var(--primary-color)' : ''
+                }} 
+              
+              onClick={() => setTab(tab.id)}>
+              {tab.label}
+            </div>
+          ))}
+          </div>
+        <div className="content-container">
+          {
+          tabs.find(tab => tab.id === tabIndex)?.content
+          }
         </div>
       </div>
     );
