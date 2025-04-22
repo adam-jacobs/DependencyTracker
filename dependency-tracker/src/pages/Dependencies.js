@@ -1,7 +1,7 @@
 import "./Dependencies.css";
 import React, { useState, useEffect } from "react";
 import XButton from '../components/XButton';
-import AddDependencyDialog from "./AddDependencyDialog";
+import AddDependenciesDialog from "./AddDependenciesDialog";
 
 function Depencencies() {
 
@@ -17,7 +17,7 @@ function Depencencies() {
     [8, 9, 10, 11],
   ]);
 
-  const [ addDependencyDialogVisible, setAddDependencyDialogVisible] = useState(false);
+  const [ addDependenciesDialogVisible, setAddDependenciesDialogVisible] = useState(false);
 
   useEffect(() => {
 
@@ -68,10 +68,10 @@ function Depencencies() {
         <XButton
           size={30}
           tooltip="Add dependency"
-          onClick={() => setAddDependencyDialogVisible(true)}
+          onClick={() => setAddDependenciesDialogVisible(true)}
         />
       </div>
-      {!addDependencyDialogVisible && (
+      {!addDependenciesDialogVisible && (
       <div className="dependencies-container">
         <div className="selector-grid-container">
           <div className="selector">
@@ -127,7 +127,7 @@ function Depencencies() {
       </div>
       )}
       <div className="add-dependencies-container">
-        {addDependencyDialogVisible && <AddDependencyDialog onClose={() => setAddDependencyDialogVisible(false)} />}
+        {addDependenciesDialogVisible && <AddDependenciesDialog onClose={() => setAddDependenciesDialogVisible(false)} />}
       </div>
     </div>
   );

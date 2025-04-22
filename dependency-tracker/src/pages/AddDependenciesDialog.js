@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import XButton  from '../components/XButton.js';
-import './AddDependencyDialog.css';
+import './AddDependenciesDialog.css';
 import '../App.css';
 
 const AddDependencyDialog = ({ onClose }) => {
@@ -149,7 +149,7 @@ const AddDependencyDialog = ({ onClose }) => {
       <div className="container">
         <div className="header-container">
           <div className="title-container">
-            <h1 className="title">Add dependency</h1>
+            <h1 className="title">Add dependencies</h1>
           </div>
           <div className="close-button-container">
             <XButton
