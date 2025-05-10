@@ -44,12 +44,12 @@ export async function getBuildId(name, version, userId){
 export async function getDependantBuildIds(buildId){
   const { data, error } = await database
     .from("dependencies")
-    .select("build_2")
-    .eq("build_1", buildId);
+    .select("dependent_build")
+    .eq("build", buildId);
 
     if (error) throw error;
 
-    return data.map(row => row.build_2);
+    return data.map(row => row.dependent_build);
 }
 
 export async function getBuilds(buildIds){
