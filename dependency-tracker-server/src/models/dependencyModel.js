@@ -56,7 +56,7 @@ export async function getBuilds(buildIds){
 
   const { data, error } = await database
   .from('builds')
-  .select('name, version')
+  .select('name, version, is_external')
   .in('id', buildIds);
 
   if (error) throw error;

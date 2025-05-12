@@ -1,5 +1,5 @@
 import "./Dependencies.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import XButton from '../components/XButton';
 import AddDependenciesDialog from "./AddDependenciesDialog";
 
@@ -17,6 +17,9 @@ function Depencencies() {
     [8, 9, 10, 11],
   ]);
 
+  const [showExternals, setShowExternals] = useState(false);
+
+  const dependenciesRef = useRef([]);
   const [ addDependenciesDialogVisible, setAddDependenciesDialogVisible] = useState(false);
 
   useEffect(() => {
@@ -37,22 +40,11 @@ function Depencencies() {
 
     if (response.status === 200){
       const result = await response.json();
-      const newProjects = [];
-      const newData = [];
 
-      const dependencies = result.dependencies;
+      dependenciesRef.current = result.dependencies;
 
-      for(let i = 0; i < dependencies.length; i++){
-        const dependency = dependencies.at(i);
-        newProjects.push(dependency.name);
-        let row = [dependency.version];
-        row = row.concat(Array(dependencies.length).fill('x'))
-        newData.push(row);
-      }
-
-      setProjects(newProjects);
-      setData(newData);
-      setSelectedProject(buildName + ' ' + buildVersion)
+      populateGrid();
+      setSelectedProject(buildName + ' ' + buildVersion);
 
       }
     }
@@ -61,6 +53,32 @@ function Depencencies() {
 
   }, [buildName, buildVersion]);
 
+  useEffect(() => {
+    populateGrid();
+  }, [showExternals]);
+
+function populateGrid(){
+  
+  const dependencies = dependenciesRef.current;
+
+  if (dependencies.length > 0){
+    const newDependencies = showExternals ? dependencies : dependencies.filter(d => d.is_external === false);
+    
+    const newProjects = [];
+    const newData = [];
+    
+    for(let i = 0; i < newDependencies.length; i++){
+      const dependency = newDependencies.at(i);
+      newProjects.push(dependency.name);
+      let row = [dependency.version];
+      row = row.concat(Array(newDependencies.length).fill('x'))
+      newData.push(row);
+    }
+
+    setProjects(newProjects);
+    setData(newData);
+  }
+}
 
   return (
     <div className="page-wrapper">
@@ -73,24 +91,31 @@ function Depencencies() {
       </div>
       {!addDependenciesDialogVisible && (
       <div className="dependencies-container">
-        <div className="selector-grid-container">
           <div className="selector">
             <div>
               <label style={{fontWeight: 'bold', margin: '1rem'}}>Build:</label>
               <br />
+              <input 
+                className="inpt" 
+                style={{margin: '1rem'}} 
+                placeholder="Enter project name"
+                value={buildName}
+                onChange={(e) => setBuildName(e.target.value)}/>
+              <input 
+                className="inpt" 
+                style={{margin: '1rem'}} 
+                placeholder="Enter project version"
+                value={buildVersion}
+                onChange={(e) => setBuildVersion(e.target.value)}/>
+              <br />
+              <label>
                 <input 
-                  className="inpt" 
-                  style={{margin: '1rem'}} 
-                  placeholder="Enter project name"
-                  value={buildName}
-                  onChange={(e) => setBuildName(e.target.value)}/>
-                <input 
-                  className="inpt" 
-                  style={{margin: '1rem'}} 
-                  placeholder="Enter project version"
-                  value={buildVersion}
-                  onChange={(e) => setBuildVersion(e.target.value)}/>
-              </div>
+                  type="checkbox"
+                  style={{margin:'1rem'}}
+                  onChange={e => setShowExternals(e.target.checked)}/>
+                  Show External Dependencies
+              </label>
+            </div>
           </div>
           <div className="grid" style={{
             display: 'grid',
@@ -122,8 +147,7 @@ function Depencencies() {
               </React.Fragment>
             ))}
 
-          </div>
-        </div>
+            </div>
       </div>
       )}
       <div className="add-dependencies-container">
