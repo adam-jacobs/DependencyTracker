@@ -11,6 +11,7 @@ function Depencencies() {
   const [selectedProject, setSelectedProject] = useState('Selected Project');
 
   const [projects, setProjects] = useState(["Project A", "Project B", "Project C"]);
+  const [nugetPackages, setNugetPackages] = useState([]);
   const [data, setData] = useState([
     [0, 1, 2, 3],
     [4, 5, 6, 7],
@@ -66,21 +67,20 @@ function populateGrid(){
   
   if (dependencies.length > 0){
     
-    const newDependencies = showExternals ? dependencies : dependencies.filter(d => d.is_external === false);
+    const nugetPackages = dependencies.filter(d => d.is_external === false);
+    const nugetPackagesCount = nugetPackages.length;
     const matrix = matrixRef.current;
 
-    const newProjects = newDependencies.map(d => d.name);
+    const newProjects = nugetPackages.map(np => np.name);
     const newVersions = [];
 
-    const matrixSize = newDependencies.length;
-
-    for(let row = 0; row < matrixSize; row++){
+    for(let row = 0; row < nugetPackagesCount; row++){
       
-      const dependency = newDependencies.at(row);
+      const dependency = nugetPackages.at(row);
       
       let rowVersions = [dependency.version];
       
-      rowVersions = rowVersions.concat(Array(newDependencies.length).fill('x'))
+      rowVersions = rowVersions.concat(Array(nugetPackagesCount).fill('x'))
       
       const dependencyDependencies = matrix[row];
 
@@ -97,7 +97,22 @@ function populateGrid(){
       newVersions.push(rowVersions);
     }
 
+    if (showExternals){
+      const externalDependencies = dependencies.filter(d => d.is_external === true);
+
+      for (const externalDependency of externalDependencies){
+        
+        newProjects.push(externalDependency.name);
+        let rowVersions = [externalDependency.version];
+        rowVersions = rowVersions.concat(Array(nugetPackagesCount).fill('x'))
+        newVersions.push(rowVersions);
+
+      }
+
+    }
+
     setProjects(newProjects);
+    setNugetPackages(nugetPackages.map(np => np.name));
     setData(newVersions);
   }
 }
@@ -141,16 +156,16 @@ function populateGrid(){
           </div>
           <div className="grid" style={{
             display: 'grid',
-            gridTemplateColumns: `auto repeat(${projects.length + 1}, auto)`,
+            gridTemplateColumns: `auto repeat(${nugetPackages.length + 1}, auto)`,
             gridTemplateRows: `auto repeat(${projects.length}, auto)`,
           }}>
 
             <div />
             <div className="x-label">{selectedProject}</div>
             
-            {projects.map((project, i) => (
+            {nugetPackages.map((nugetPackage, i) => (
               <div className="x-label" >
-                {project}
+                {nugetPackage}
               </div>
             ))}
 
