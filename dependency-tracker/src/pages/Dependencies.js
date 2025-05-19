@@ -20,6 +20,8 @@ function Depencencies() {
   const [showExternals, setShowExternals] = useState(false);
 
   const dependenciesRef = useRef([]);
+  const matrixRef = useRef([[]]);
+
   const [ addDependenciesDialogVisible, setAddDependenciesDialogVisible] = useState(false);
 
   useEffect(() => {
@@ -42,6 +44,7 @@ function Depencencies() {
       const result = await response.json();
 
       dependenciesRef.current = result.dependencies;
+      matrixRef.current = result.matrix;
 
       populateGrid();
       setSelectedProject(buildName + ' ' + buildVersion);
@@ -60,23 +63,42 @@ function Depencencies() {
 function populateGrid(){
   
   const dependencies = dependenciesRef.current;
-
+  
   if (dependencies.length > 0){
+    
     const newDependencies = showExternals ? dependencies : dependencies.filter(d => d.is_external === false);
-    
-    const newProjects = [];
-    const newData = [];
-    
-    for(let i = 0; i < newDependencies.length; i++){
-      const dependency = newDependencies.at(i);
-      newProjects.push(dependency.name);
-      let row = [dependency.version];
-      row = row.concat(Array(newDependencies.length).fill('x'))
-      newData.push(row);
+    const matrix = matrixRef.current;
+
+    const newProjects = newDependencies.map(d => d.name);
+    const newVersions = [];
+
+    const matrixSize = newDependencies.length;
+
+    for(let row = 0; row < matrixSize; row++){
+      
+      const dependency = newDependencies.at(row);
+      
+      let rowVersions = [dependency.version];
+      
+      rowVersions = rowVersions.concat(Array(newDependencies.length).fill('x'))
+      
+      const dependencyDependencies = matrix[row];
+
+      if (dependencyDependencies.length > 0){
+          
+        for (const dependencyDependency of dependencyDependencies){
+
+          const j = newProjects.indexOf(dependencyDependency.name);
+          rowVersions[j] = dependencyDependency.version;
+
+        }
+      }
+      
+      newVersions.push(rowVersions);
     }
 
     setProjects(newProjects);
-    setData(newData);
+    setData(newVersions);
   }
 }
 

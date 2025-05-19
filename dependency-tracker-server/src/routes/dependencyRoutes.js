@@ -8,11 +8,21 @@ dependencyRoutes.post('/getDependencies', async (req, res) =>
     const body = req.body;
 
     try {
-        const buildId = await getBuildId(body.buildName, body.buildVersion, body.userId);
-        const dependantBuildIds = await getDependantBuildIds(buildId);
+        let buildId = await getBuildId(body.buildName, body.buildVersion, body.userId);
+        let dependantBuildIds = await getDependantBuildIds(buildId);
         const dependencies = await getBuilds(dependantBuildIds);
 
-        res.status(200).json({dependencies});
+        const matrix = [];
+        const nugetPackages = dependencies.filter(d => d.is_external === false);
+
+        for (const nugetPackage of nugetPackages){
+            buildId = await getBuildId(nugetPackage.name, nugetPackage.version, body.userId);
+            dependantBuildIds = await getDependantBuildIds(buildId);
+            const nugetPackageDependencies = (await getBuilds(dependantBuildIds)).filter(d => nugetPackages.some(np => np.name === d.name));
+            matrix.push(nugetPackageDependencies);
+        }
+
+        res.status(200).json({dependencies, matrix});
     }
     catch (error){
         res.status(500).json({error: error.message});
