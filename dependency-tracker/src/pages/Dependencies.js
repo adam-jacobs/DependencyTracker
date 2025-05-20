@@ -88,7 +88,7 @@ function populateGrid(){
           
         for (const dependencyDependency of dependencyDependencies){
 
-          const j = newProjects.indexOf(dependencyDependency.name);
+          const j = newProjects.indexOf(dependencyDependency.name) + 1;
           rowVersions[j] = dependencyDependency.version;
 
         }
