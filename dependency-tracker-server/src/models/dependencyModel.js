@@ -38,7 +38,7 @@ export async function getBuildId(name, version, userId){
 
         if (error) throw error;
 
-        return data[0].id;
+        return data.length > 0 ? data[0].id : null;
 }
 
 export async function getDependantBuildIds(buildId){
@@ -54,14 +54,20 @@ export async function getDependantBuildIds(buildId){
 
 export async function getBuilds(buildIds){
 
-  const { data, error } = await database
-  .from('builds')
-  .select('name, version, is_external')
-  .in('id', buildIds);
+  if (buildIds.length > 0) {
+    const { data, error } = await database
+    .from('builds')
+    .select('name, version, is_external')
+    .in('id', buildIds);
+    
+    if (error) throw error;
+    
+    return data;
+  }
+  else {
+    return [];
+  }
 
-  if (error) throw error;
-
-  return data;
 }
 
 export async function addDependency (buildId, dependentBuildId) 

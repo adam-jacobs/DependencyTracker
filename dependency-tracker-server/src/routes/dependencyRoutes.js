@@ -7,8 +7,21 @@ dependencyRoutes.post('/getDependencies', async (req, res) =>
 {
     const body = req.body;
 
+    if (body.buildName === undefined ||
+        body.buildVersion === undefined ||
+        body.userId === undefined){
+            res.status(400).json({error: "request must provide a buildName, buildVersion and userId"});
+            return;
+        }
+
     try {
         let buildId = await getBuildId(body.buildName, body.buildVersion, body.userId);
+
+        if (buildId === null){
+            res.status(200).json({dependencies: [], matrix: []});
+            return;
+        }
+
         let dependantBuildIds = await getDependantBuildIds(buildId);
         const dependencies = await getBuilds(dependantBuildIds);
 

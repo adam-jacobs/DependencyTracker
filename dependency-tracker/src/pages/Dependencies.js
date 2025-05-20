@@ -27,29 +27,36 @@ function Depencencies() {
 
   useEffect(() => {
 
-  const getDependencies = async () => {
+    const getDependencies = async () => {
 
-    const userId = localStorage.getItem('userId');
+      const userId = localStorage.getItem('userId');
 
-    const response = await fetch('http://localhost:5000/api/dependencies/getDependencies', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({userId, buildName, buildVersion})
-    })
-
-    if (!response.ok){
-      //TODO: Handle failing to reach the server
-    }
-
-    if (response.status === 200){
-      const result = await response.json();
-
-      dependenciesRef.current = result.dependencies;
-      matrixRef.current = result.matrix;
-
-      populateGrid();
-      setSelectedProject(buildName + ' ' + buildVersion);
-
+      try {
+        const response = await fetch('http://localhost:5000/api/dependencies/getDependencies', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({userId, buildName, buildVersion})
+        })
+      
+        const result = await response.json();
+        
+        if (!response.ok){
+          console.log(result.error);
+        }
+      
+        if (response.status === 200){
+          const dependenciesResponse = result.dependencies;
+          
+          if (dependenciesResponse.length > 0){
+            dependenciesRef.current = dependenciesResponse;
+            matrixRef.current = result.matrix;
+            populateGrid();
+            setSelectedProject(buildName + ' ' + buildVersion);
+          }
+        }
+      }
+      catch (error){
+          console.log(error.message);
       }
     }
 
