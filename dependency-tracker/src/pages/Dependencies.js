@@ -8,15 +8,11 @@ function Depencencies() {
   const [buildName, setBuildName] = useState('');
   const [buildVersion, setBuildVersion] = useState('');
 
-  const [selectedProject, setSelectedProject] = useState('Selected Project');
+  const [selectedProject, setSelectedProject] = useState('');
 
-  const [projects, setProjects] = useState(["Project A", "Project B", "Project C"]);
+  const [projects, setProjects] = useState([]);
   const [nugetPackages, setNugetPackages] = useState([]);
-  const [data, setData] = useState([
-    [0, 1, 2, 3],
-    [4, 5, 6, 7],
-    [8, 9, 10, 11],
-  ]);
+  const [data, setData] = useState([[]]);
 
   const [showExternals, setShowExternals] = useState(false);
 
@@ -168,7 +164,9 @@ function populateGrid(){
           }}>
 
             <div />
+            {selectedProject !== '' &&
             <div className="x-label">{selectedProject}</div>
+            }
             
             {nugetPackages.map((nugetPackage, i) => (
               <div className="x-label" >
