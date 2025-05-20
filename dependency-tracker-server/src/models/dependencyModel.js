@@ -34,7 +34,8 @@ export async function getBuildId(name, version, userId){
           .select("id")
           .eq("name", name)
           .eq("version", version)
-          .eq("user_id", userId);
+          .eq("user_id", userId)
+          .eq("is_external", false);
 
         if (error) throw error;
 
