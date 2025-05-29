@@ -32,6 +32,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--background-secondary);
     padding: 0.5rem;
 }
 
@@ -45,4 +46,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.legend-item-container {
+    display: flex;
+    width: 200px;
+}
+
+.legend {
+    height: 20px;
+    margin: 5px;
+    width: 20px;
+    border-radius: 5px;
+}
+
+.legend-label {
+    margin: 5px;
 }
