@@ -134,7 +134,7 @@ const getBackground = (rowIndex, colIndex, cell) => {
 }
   return (
     <div className="page-wrapper">
-      <div className="menu-bar">
+      <div class="menu-bar" style={{height: '100vh', position: 'sticky', top:'0', background: 'var(--toolbar-background)'}}>
         <XButton
           size={30}
           tooltip="Add dependency"

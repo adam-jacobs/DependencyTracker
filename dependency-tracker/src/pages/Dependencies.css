@@ -1,14 +1,5 @@
 .page-wrapper {
-    display: inline;
-}
-
-.menu-bar{
-    height: 100vh;
     display: flex;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    background: var(--toolbar-background);
 }
 
 .dependencies-container {
