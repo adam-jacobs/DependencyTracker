@@ -8,7 +8,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon src/app.js"
+    "start": "node src/app.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
