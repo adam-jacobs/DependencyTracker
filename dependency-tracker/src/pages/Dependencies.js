@@ -143,32 +143,33 @@ const getBackground = (rowIndex, colIndex, cell) => {
       </div>
       {!addDependenciesDialogVisible && (
       <div className="dependencies-container">
+        <div class="selector-container" style={{display:'flex', justifyContent:'center'}}>
           <div className="selector">
-            <div>
-              <label style={{fontWeight: 'bold', margin: '1rem'}}>Build:</label>
-              <br />
-              <input 
-                className="inpt" 
-                style={{margin: '1rem'}} 
-                placeholder="Enter project name"
-                value={buildName}
-                onChange={(e) => setBuildName(e.target.value)}/>
-              <input 
-                className="inpt" 
-                style={{margin: '1rem'}} 
-                placeholder="Enter project version"
-                value={buildVersion}
-                onChange={(e) => setBuildVersion(e.target.value)}/>
-              <br />
-              <label>
+              <label style={{fontWeight: 'bold', margin: '1rem', alignSelf:'flex-start'}}>Build:</label>
+              <div>
+                <input 
+                  className="project" 
+                  style={{margin: '1rem'}} 
+                  placeholder="Enter project name"
+                  value={buildName}
+                  onChange={(e) => setBuildName(e.target.value)}/>
+                <input 
+                  className="inpt" 
+                  style={{margin: '1rem'}} 
+                  placeholder="Enter project version"
+                  value={buildVersion}
+                  onChange={(e) => setBuildVersion(e.target.value)}/>
+                <div></div>
+              </div>
+              <label style={{alignSelf:'flex-start'}}>
                 <input 
                   type="checkbox"
                   style={{margin:'1rem'}}
                   onChange={e => setShowExternals(e.target.checked)}/>
                   Show External Dependencies
               </label>
-            </div>
           </div>
+        </div>
           <div class="grid-legend-flex-box" style={{display:'flex', justifyContent: 'center'}}>
             <div class="spacer" style={{width: '100%'}}></div>
             <div className="grid" style={{
