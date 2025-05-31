@@ -12,14 +12,13 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use('/api/users', userRoutes);
+app.use('/api/dependencies', dependencyRoutes);
 app.use(express.static(path.join(__dirname, '../../client/build')));
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../../client/build/index.html'));
 })
-
-app.use('/api/users', userRoutes);
-
-app.use('/api/dependencies', dependencyRoutes);
 
 app.listen(5000, () => {
   console.log("server running on localhost:5000");
