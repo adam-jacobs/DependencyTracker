@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const supabaseUrl = "http://127.0.0.1:54321";
+const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
 const database = createClient(supabaseUrl, supabaseKey);
 
