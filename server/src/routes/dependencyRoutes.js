@@ -1,26 +1,20 @@
-import express from 'express';
+import { Router } from 'express';
 import { addBuild, addDependency, getBuildId, getDependantBuildIds, getBuilds } from '../models/dependencyModel.js';
 
-const dependencyRoutes = express.Router();
+const dependencyRoutes = Router();
 
 dependencyRoutes.post('/getDependencies', async (req, res) =>
 {
     const body = req.body;
 
-    if (body.buildName === undefined ||
-        body.buildVersion === undefined ||
-        body.userId === undefined){
-            res.status(400).json({error: "request must provide a buildName, buildVersion and userId"});
-            return;
-        }
+    if (body.buildName === undefined) return res.status(400).json({error: "Request must provide a build name"});
+    if (body.buildVersion === undefined) return res.status(400).json({error: "Resquest must provide a build version"});
+    if (body.userId === undefined) return res.status(400).json({error: "request must provide a user id"});
 
     try {
         let buildId = await getBuildId(body.buildName, body.buildVersion, body.userId);
 
-        if (buildId === null){
-            res.status(200).json({dependencies: [], matrix: []});
-            return;
-        }
+        if (!buildId) return res.status(200).json({dependencies: [], matrix: []});
 
         let dependantBuildIds = await getDependantBuildIds(buildId);
         const dependencies = await getBuilds(dependantBuildIds);
